@@ -17,6 +17,10 @@
     <string name="search_hint">Должность, ключевые слова</string>
     <string name="jobs_for_you">Вакансии для вас</string>
     <string name="more">Ёще</string>
+    <string name="respond">Откликнуться</string>
+    <string name="filter_tv">По соответствию</string>
+    <string name="tv_favorites">Избранное</string>
+    <string name="count_favorites">1 вакансия</string>
 
     <string name="search">Поиск</string>
     <string name="favorites">Избранное</string>

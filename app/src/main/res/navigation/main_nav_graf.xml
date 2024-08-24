@@ -28,4 +28,9 @@
         android:name="com.example.jobsearchapp.presentation.search.MainScreen"
         android:label="fragment_main_screen"
         tools:layout="@layout/fragment_main_screen" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.jobsearchapp.presentation.favorites.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" />
 </navigation>

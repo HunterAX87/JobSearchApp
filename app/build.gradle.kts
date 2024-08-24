@@ -57,6 +57,8 @@ dependencies {
     implementation(libs.androidx.lifecycle)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.com.hannesdorfmann.adapterdelegates4)
+    implementation(libs.androidx.room)
+    kapt(libs.androidx.room.compiler)
 
 
     implementation(libs.androidx.core.ktx)

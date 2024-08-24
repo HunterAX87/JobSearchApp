@@ -15,19 +15,21 @@ class VacanciesAdapter(
 ) : RecyclerView.Adapter<VacanciesAdapter.VacancyViewHolder>() {
 
     class VacancyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val title: TextView = view.findViewById(R.id.vacancy_title)
-        val company: TextView = view.findViewById(R.id.vacancy_company)
-        val location: TextView = view.findViewById(R.id.vacancy_location)
-        val experience: TextView = view.findViewById(R.id.vacancy_experience)
-        val publishedDate: TextView = view.findViewById(R.id.vacancy_published_date)
-        val lookingNumber: TextView = view.findViewById(R.id.vacancy_looking_number)
-        val favoriteIcon: ImageView = view.findViewById(R.id.vacancy_favorite_icon)
+        private val title: TextView = view.findViewById(R.id.vacancy_title)
+        private val company: TextView = view.findViewById(R.id.vacancy_company)
+        private val location: TextView = view.findViewById(R.id.vacancy_location)
+        private val experience: TextView = view.findViewById(R.id.vacancy_experience)
+        private val publishedDate: TextView = view.findViewById(R.id.vacancy_published_date)
+        private val lookingNumber: TextView = view.findViewById(R.id.vacancy_looking_number)
+        private val favoriteIcon: ImageView = view.findViewById(R.id.vacancy_favorite_icon)
+        private val salary: TextView = view.findViewById(R.id.vacancy_salary)
 
         fun bind(vacancy: Vacancy, clickListener: (Vacancy) -> Unit) {
             title.text = vacancy.title
             company.text = vacancy.company
             location.text = vacancy.address.town
             experience.text = vacancy.experience.previewText
+            salary.text = vacancy.salary.short ?: "Зарплата не указана" // Обработка отсутствующей зарплаты
             publishedDate.text = formatPublishedDate(vacancy.publishedDate)
 
             // Установка количества просматривающих
@@ -39,7 +41,18 @@ class VacanciesAdapter(
             }
 
             // Установка иконки избранного
-            favoriteIcon.setImageResource(if (vacancy.isFavorite) R.drawable.icon_favorite_filled else R.drawable.icon_favorite_empty)
+            favoriteIcon.setImageResource(if (vacancy.isFavorite) R.drawable.favorites_true3x else R.drawable.favorites_false3x)
+
+            // Установка обработчика клика на иконку избранного
+            favoriteIcon.setOnClickListener {
+                vacancy.isFavorite = !vacancy.isFavorite // Инвертируем значение isFavorite
+                favoriteIcon.setImageResource(if (vacancy.isFavorite) R.drawable.favorites_true3x else R.drawable.favorites_false3x) // Обновляем иконку
+                clickListener(vacancy) // Вызываем clickListener с обновленной вакансией
+            }
+
+            itemView.setOnClickListener {
+                clickListener(vacancy) // Обработка клика по вакансии
+            }
 
             itemView.setOnClickListener {
                 clickListener(vacancy) // Обработка клика по вакансии
@@ -47,7 +60,6 @@ class VacanciesAdapter(
         }
 
         private fun formatPublishedDate(date: String): String {
-            // Преобразование даты в нужный формат
             val parts = date.split("-")
             return "Опубликовано ${parts[2]} ${getMonthDeclension(parts[1].toInt())}"
         }
@@ -92,6 +104,6 @@ class VacanciesAdapter(
 
     fun updateVacancies(newVacancies: List<Vacancy>) {
         vacancies = newVacancies
-        notifyDataSetChanged()
+        notifyDataSetChanged() // Можно заменить на DiffUtil для оптимизации
     }
 }

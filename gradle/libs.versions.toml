@@ -18,6 +18,7 @@ dagger="2.46.1"
 recyclerview="1.3.2"
 lifecycle="2.8.4"
 adapterdelegates4="4.3.2"
+room="2.6.1"
 
 
 [libraries]
@@ -46,6 +47,8 @@ androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview"
 androidx-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 com-hannesdorfmann-adapterdelegates4 = { group = "com.hannesdorfmann", name = "adapterdelegates4-kotlin-dsl", version.ref = "adapterdelegates4" }
+androidx-room = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
 
 

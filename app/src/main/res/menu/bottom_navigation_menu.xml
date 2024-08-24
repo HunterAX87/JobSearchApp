@@ -5,7 +5,7 @@
         android:title="@string/search" />
      <item
          android:id="@+id/nav_favorites"
-         android:icon="@drawable/favorites_true3x"
+         android:icon="@drawable/favorites_false3x"
          android:title="@string/favorites" />
       <item
           android:id="@+id/nav_responses"
