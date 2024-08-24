@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginEnd="10dp"
+    android:background="@color/black"
+    tools:context=".presentation.authorization.LoginConfirmScreen">
+
+    <TextView
+        android:id="@+id/tvCodSended"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="140dp"
+        android:text="@string/cod_sended"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvConfirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="15dp"
+        android:text="@string/confirm_text"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="@+id/tvCodSended"
+        app:layout_constraintTop_toBottomOf="@+id/tvCodSended" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="216dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/tvConfirm"
+        app:layout_constraintTop_toBottomOf="@+id/tvConfirm">
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="-5dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/radius_edittext"
+            android:backgroundTint="@color/grey2"
+            android:gravity="center"
+            android:hint="|"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/grey5"
+            android:textColorHint="@color/grey3"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="-5dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/radius_edittext"
+            android:backgroundTint="@color/grey2"
+            android:gravity="center"
+            android:hint="*"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/grey5"
+            android:textColorHint="@color/grey3"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/editText3"
+            android:layout_width="-5dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/radius_edittext"
+            android:backgroundTint="@color/grey2"
+            android:gravity="center"
+            android:hint="*"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/grey5"
+            android:textColorHint="@color/grey3"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/editText4"
+            android:layout_width="-5dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/radius_edittext"
+            android:backgroundTint="@color/grey2"
+            android:gravity="center"
+            android:hint="*"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/grey5"
+            android:textColorHint="@color/grey3"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bConfirm"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="15dp"
+        android:backgroundTint="@color/blue"
+        android:clickable="false"
+        android:text="@string/b_confirm"
+        android:textColor="@color/white"
+        app:cornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

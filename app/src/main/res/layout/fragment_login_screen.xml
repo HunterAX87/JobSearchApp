@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    app:circularflow_radiusInDP="100dp"
+    tools:context=".presentation.authorization.LoginScreen">
+
+    <TextView
+        android:id="@+id/tvEnterAcc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:text="@string/login_to_your_personal_account"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="185dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="227dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/grey1"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:cardCornerRadius="8dp"
+        app:circularflow_radiusInDP="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvSearchJob"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="18dp"
+                android:text="@string/job_search"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/edEmail"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/radius_edittext"
+                android:drawablePadding="10dp"
+                android:paddingLeft="10dp"
+                android:backgroundTint="@color/grey2"
+                android:drawableStart="@drawable/email1x"
+                android:ems="10"
+                android:hint="@string/email_or_phone"
+                android:inputType="text"
+                android:textColor="@color/grey5"
+                android:textColorHint="@color/grey3"
+                android:textSize="17sp"
+                app:circularflow_defaultRadius="100dp"
+                app:layout_constraintCircleRadius="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvSearchJob"
+                app:layout_constraintTop_toBottomOf="@+id/tvSearchJob" />
+
+            <ImageView
+                android:id="@+id/imEmailClean"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="65dp"
+                android:layout_marginEnd="16dp"
+                android:clickable="true"
+                android:src="@drawable/email_clean"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/bContinue"
+                android:layout_width="167dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="35dp"
+                android:backgroundTint="@color/blue"
+                android:clickable="false"
+                android:text="@string/log_in_continue"
+                android:textColor="@color/white"
+                app:cornerRadius="8dp"
+                app:layout_constraintStart_toStartOf="@+id/edEmail"
+                app:layout_constraintTop_toBottomOf="@+id/edEmail" />
+
+            <TextView
+                android:id="@+id/tvEnterWPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:clickable="true"
+                android:text="@string/log_in_with_pass"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/bContinue"
+                app:layout_constraintTop_toTopOf="@+id/bContinue" />
+
+            <TextView
+                android:id="@+id/tvErrorEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/incorrect_email"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/bContinue"
+                app:layout_constraintStart_toStartOf="@+id/edEmail"
+                app:layout_constraintTop_toBottomOf="@+id/edEmail" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="141dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="427dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/grey1"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:cardCornerRadius="10dp"
+        app:circularflow_radiusInDP="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvSearchEmployees"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/employees_search"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPostingVacancies"
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:text="@string/posting_vacancies"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvSearchEmployees"
+                app:layout_constraintTop_toBottomOf="@+id/tvSearchEmployees" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/green"
+                android:text="@string/i_search_employees"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@+id/tvPostingVacancies"
+                app:layout_constraintStart_toStartOf="@+id/tvPostingVacancies"
+                app:layout_constraintTop_toBottomOf="@+id/tvPostingVacancies" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

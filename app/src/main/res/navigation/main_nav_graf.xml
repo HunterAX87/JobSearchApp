@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graf"
+    app:startDestination="@id/loginScreen">
+
+    <fragment
+        android:id="@+id/loginScreen"
+        android:name="com.example.jobsearchapp.presentation.authorization.LoginScreen"
+        android:label="fragment_login_screen"
+        tools:layout="@layout/fragment_login_screen" >
+        <action
+            android:id="@+id/action_loginScreen_to_loginConfirmScreen"
+            app:destination="@id/loginConfirmScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginConfirmScreen"
+        android:name="com.example.jobsearchapp.presentation.authorization.LoginConfirmScreen"
+        android:label="fragment_login_confirm_screen"
+        tools:layout="@layout/fragment_login_confirm_screen" >
+        <action
+            android:id="@+id/action_loginConfirmScreen_to_mainScreen"
+            app:destination="@id/mainScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainScreen"
+        android:name="com.example.jobsearchapp.presentation.search.MainScreen"
+        android:label="fragment_main_screen"
+        tools:layout="@layout/fragment_main_screen" />
+</navigation>
