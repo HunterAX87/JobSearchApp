@@ -24,13 +24,21 @@ class VacanciesAdapter(
         private val favoriteIcon: ImageView = view.findViewById(R.id.vacancy_favorite_icon)
         private val salary: TextView = view.findViewById(R.id.vacancy_salary)
 
+
         fun bind(vacancy: Vacancy, clickListener: (Vacancy) -> Unit) {
             title.text = vacancy.title
             company.text = vacancy.company
             location.text = vacancy.address.town
             experience.text = vacancy.experience.previewText
-            salary.text = vacancy.salary.short ?: "Зарплата не указана" // Обработка отсутствующей зарплаты
             publishedDate.text = formatPublishedDate(vacancy.publishedDate)
+
+            // Установка зарплаты
+            if (vacancy.salary.short.isNullOrEmpty()) {
+                salary.visibility = View.GONE // Скрываем весь layout зарплаты
+            } else {
+                salary.text = vacancy.salary.short // Устанавливаем зарплату
+                salary.visibility = View.VISIBLE // Показываем layout зарплаты
+            }
 
             // Установка количества просматривающих
             if (vacancy.lookingNumber > 0) {
@@ -48,10 +56,6 @@ class VacanciesAdapter(
                 vacancy.isFavorite = !vacancy.isFavorite // Инвертируем значение isFavorite
                 favoriteIcon.setImageResource(if (vacancy.isFavorite) R.drawable.favorites_true3x else R.drawable.favorites_false3x) // Обновляем иконку
                 clickListener(vacancy) // Вызываем clickListener с обновленной вакансией
-            }
-
-            itemView.setOnClickListener {
-                clickListener(vacancy) // Обработка клика по вакансии
             }
 
             itemView.setOnClickListener {

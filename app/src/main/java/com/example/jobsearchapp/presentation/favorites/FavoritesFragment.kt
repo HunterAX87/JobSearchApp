@@ -52,7 +52,6 @@ class FavoritesFragment : Fragment() {
             updateFavorites() // Обновляем список избранных вакансий
         }
 
-
         binding.rcFavorites.layoutManager = LinearLayoutManager(requireContext())
         binding.rcFavorites.adapter = favoritesAdapter
 
@@ -66,7 +65,7 @@ class FavoritesFragment : Fragment() {
         }
 
         // Вызовите метод для загрузки избранных вакансий
-        viewModel.loadFavoriteVacancies() // Теперь просто загружает данные
+        viewModel.loadFavoriteVacancies()
     }
 
     private fun updateFavorites() {
