@@ -56,11 +56,6 @@ class MainScreen : Fragment() {
             startActivity(intent)
         }
 
-        binding.imUnon.setOnClickListener{
-            findNavController().navigate(
-                R.id.favoritesFragment
-            )
-        }
 
         // Создание адаптера вакансий с обработчиком клика
         vacanciesAdapter = VacanciesAdapter(emptyList()) { vacancy ->

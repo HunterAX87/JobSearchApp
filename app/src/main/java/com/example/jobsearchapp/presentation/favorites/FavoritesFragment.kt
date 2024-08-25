@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobsearchapp.MyApplication
+import com.example.jobsearchapp.R
 import com.example.jobsearchapp.databinding.FragmentFavoritesBinding
 import com.example.jobsearchapp.presentation.search.MainViewModel
 import com.example.jobsearchapp.presentation.search.ViewModelFactory
@@ -50,7 +52,9 @@ class FavoritesFragment : Fragment() {
             vacancy.isFavorite = false // Устанавливаем isFavorite в false
             viewModel.saveOrUpdateVacancy(vacancy) // Сохраняем изменения в базе данных
             updateFavorites() // Обновляем список избранных вакансий
+
         }
+
 
         binding.rcFavorites.layoutManager = LinearLayoutManager(requireContext())
         binding.rcFavorites.adapter = favoritesAdapter

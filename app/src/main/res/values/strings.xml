@@ -21,6 +21,9 @@
     <string name="filter_tv">По соответствию</string>
     <string name="tv_favorites">Избранное</string>
     <string name="count_favorites">1 вакансия</string>
+    <string name="your_tasks">Ваши задачи</string>
+    <string name="question_for_employer">Задайте вопрос работодателю</string>
+    <string name="hi_will_receive">Он получит его с откликом на вакансию</string>
 
     <string name="search">Поиск</string>
     <string name="favorites">Избранное</string>
