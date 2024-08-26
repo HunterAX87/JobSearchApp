@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginScreen"
-        android:name="com.example.jobsearchapp.presentation.authorization.LoginScreen"
+        android:name="com.example.jobsearchapp.feature.auth.LoginScreen"
         android:label="fragment_login_screen"
         tools:layout="@layout/fragment_login_screen" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginConfirmScreen"
-        android:name="com.example.jobsearchapp.presentation.authorization.LoginConfirmScreen"
+        android:name="com.example.jobsearchapp.feature.auth.LoginConfirmScreen"
         android:label="fragment_login_confirm_screen"
         tools:layout="@layout/fragment_login_confirm_screen" >
         <action

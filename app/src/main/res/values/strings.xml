@@ -24,6 +24,42 @@
     <string name="your_tasks">Ваши задачи</string>
     <string name="question_for_employer">Задайте вопрос работодателю</string>
     <string name="hi_will_receive">Он получит его с откликом на вакансию</string>
+    <string name="summary_for_response">Резюме для отклика</string>
+    <string name="tv_add_accomp">Добавить сопроводительное</string>
+    <string name="your_accomp">Ваше сопроводительное письмо</string>
+    <string name="salary_not_exist">Уровень дохода не указан</string>
+    <string name="applied_number">человек уже откликнулось</string>
+    <string name="looking_number">человека сейчас смотрят</string>
+    <string name="looking_n">Сейчас просматривает</string>
+
+
+
+    <plurals name="vacancies_count">
+        <item quantity="one">вакансия</item>
+        <item quantity="few">вакансии</item>
+        <item quantity="many">вакансий</item>
+    </plurals>
+
+    <plurals name="person_count">
+        <item quantity="one">%d человек</item>
+        <item quantity="few">%d человека</item>
+        <item quantity="many">%d человек</item>
+    </plurals>
+
+    <string-array name="months">
+        <item>января</item>
+        <item>февраля</item>
+        <item>марта</item>
+        <item>апреля</item>
+        <item>мая</item>
+        <item>июня</item>
+        <item>июля</item>
+        <item>августа</item>
+        <item>сентября</item>
+        <item>октября</item>
+        <item>ноября</item>
+        <item>декабря</item>
+    </string-array>
 
     <string name="search">Поиск</string>
     <string name="favorites">Избранное</string>

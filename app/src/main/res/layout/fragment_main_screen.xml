@@ -91,7 +91,8 @@
                 android:id="@+id/rcViewRec"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:layout_marginLeft="16dp" />
+                android:layout_marginLeft="16dp"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/linearMore"

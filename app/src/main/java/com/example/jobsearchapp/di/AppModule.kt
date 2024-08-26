@@ -1,10 +1,12 @@
-package com.example.jobsearchapp.presentation.search
+package com.example.jobsearchapp.di
 
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import com.example.jobsearchapp.data.room.AppDatabase
-import com.example.jobsearchapp.data.room.VacancyDao
+import com.example.jobsearchapp.data.local.AppDatabase
+import com.example.jobsearchapp.data.local.VacancyDao
+import com.example.jobsearchapp.data.repository.DataRepository
+import com.example.jobsearchapp.viewmodel.ViewModelFactory
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

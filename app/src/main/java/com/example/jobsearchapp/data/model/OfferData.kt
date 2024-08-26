@@ -1,25 +1,23 @@
-package com.example.jobsearchapp.data
+package com.example.jobsearchapp.data.model
+
 import android.os.Parcel
 import android.os.Parcelable
 
 data class OffersResponse(
     val offers: List<Offer>,
-    val vacancies: List<Vacancy> // Если вам нужны вакансии, создайте соответствующий класс
+    val vacancies: List<Vacancy>
 )
 
 data class Offer(
     val id: String,
     val title: String,
     val link: String,
-    val button: Button? // Обязательно добавьте класс Button
+    val button: Button?
 )
 
 data class Button(
     val text: String
 )
-
-
-
 
 
 data class Vacancy(
@@ -44,7 +42,10 @@ data class Vacancy(
         title = parcel.readString() ?: "",
         address = parcel.readParcelable(Address::class.java.classLoader) ?: Address("", "", ""),
         company = parcel.readString() ?: "",
-        experience = parcel.readParcelable(Experience::class.java.classLoader) ?: Experience("", ""),
+        experience = parcel.readParcelable(Experience::class.java.classLoader) ?: Experience(
+            "",
+            ""
+        ),
         publishedDate = parcel.readString() ?: "",
         isFavorite = parcel.readByte() != 0.toByte(),
         salary = parcel.readParcelable(Salary::class.java.classLoader) ?: Salary("", ""),

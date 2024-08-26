@@ -1,7 +1,9 @@
-package com.example.jobsearchapp.presentation.search
+package com.example.jobsearchapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.jobsearchapp.data.repository.DataRepository
+import com.example.jobsearchapp.presentation.search.MainViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
 

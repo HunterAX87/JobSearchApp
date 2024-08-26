@@ -2,9 +2,9 @@ package com.example.jobsearchapp
 
 import android.app.Application
 
-import com.example.jobsearchapp.presentation.search.AppComponent
-import com.example.jobsearchapp.presentation.search.DaggerAppComponent
-import com.example.jobsearchapp.presentation.search.AppModule
+import com.example.jobsearchapp.di.AppComponent
+import com.example.jobsearchapp.di.AppModule
+import com.example.jobsearchapp.di.DaggerAppComponent
 
 class MyApplication : Application() {
     lateinit var appComponent: AppComponent

@@ -1,4 +1,4 @@
-package com.example.jobsearchapp.data.room
+package com.example.jobsearchapp.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

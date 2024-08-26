@@ -51,6 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"
+        android:layout_marginBottom="100dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,19 +103,21 @@
                     android:textColor="@color/white" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
-                android:orientation="horizontal">
+                android:layout_marginBottom="16dp">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="180dp"
-                    android:layout_height="60dp"
+                    android:id="@+id/cardView"
+                    android:layout_width="wrap_content"
 
+                    android:layout_height="60dp"
                     android:backgroundTint="@color/dark_green"
-                    app:cardCornerRadius="8dp">
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -124,10 +127,12 @@
                             android:id="@+id/imApply"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
+                            android:layout_marginStart="-3dp"
                             android:layout_marginTop="15dp"
-                            android:layout_marginEnd="10dp"
+                            android:layout_marginEnd="3dp"
                             android:src="@drawable/user3x"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/tvAppliedNumber"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -144,11 +149,13 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="180dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:layout_marginLeft="17dp"
+                    android:layout_marginStart="16dp"
                     android:backgroundTint="@color/dark_green"
-                    app:cardCornerRadius="8dp">
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/cardView"
+                    app:layout_constraintTop_toTopOf="@+id/cardView">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -158,15 +165,17 @@
                             android:id="@+id/imLook"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
+                            android:layout_marginStart="12dp"
                             android:layout_marginTop="15dp"
-                            android:layout_marginEnd="10dp"
+                            android:layout_marginEnd="3dp"
                             android:src="@drawable/green_eye3x"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/tvLookingNumber"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/tvLookingNumber"
-                            android:layout_width="125dp"
+                            android:layout_width="115dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:text="147 человек уже откликнулись"
@@ -176,7 +185,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -281,33 +290,6 @@
                 android:text="@string/hi_will_receive"
                 android:textColor="@color/grey3" />
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="33dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/grey2"
-                app:cardCornerRadius="50dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/tvQuestion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="7dp"
-                        android:layout_marginBottom="7dp"
-                        android:text="Где распологается место работы?"
-                        android:textColor="@color/white"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
             <LinearLayout
                 android:id="@+id/questionsContainer"
                 android:layout_width="match_parent"
@@ -316,7 +298,7 @@
 
             <Button
 
-                android:id="@+id/button"
+                android:id="@+id/bRespondAbout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"

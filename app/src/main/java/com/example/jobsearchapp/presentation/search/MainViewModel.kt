@@ -1,22 +1,22 @@
 package com.example.jobsearchapp.presentation.search
 
+import android.content.res.Resources
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.jobsearchapp.data.Address
-import com.example.jobsearchapp.data.Experience
-import com.example.jobsearchapp.data.Offer
-import com.example.jobsearchapp.data.Salary
-import com.example.jobsearchapp.data.Vacancy
-import com.example.jobsearchapp.data.room.VacancyEntity
+import com.example.jobsearchapp.R
+import com.example.jobsearchapp.data.model.Vacancy
+import com.example.jobsearchapp.data.repository.DataRepository
+import com.example.jobsearchapp.presentation.search.ofers_list.OfferUI
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(private val repository: DataRepository) : ViewModel() {
 
-    private val _offers = MutableLiveData<List<Offer>>()
-    val offers: LiveData<List<Offer>> get() = _offers
+    private val _offers = MutableLiveData<List<OfferUI>>()
+    val offers: LiveData<List<OfferUI>> get() = _offers
 
     private val _vacancies = MutableLiveData<List<Vacancy>>()
     val vacancies: LiveData<List<Vacancy>> get() = _vacancies
@@ -26,67 +26,44 @@ class MainViewModel @Inject constructor(private val repository: DataRepository) 
 
     fun loadOffers() {
         viewModelScope.launch {
-            _offers.value = repository.getOffers()
+            _offers.value = repository.getOffers().map { it.mapToUI() }
+            Log.e("MyLog", "loadedOffers:  ${_offers.value}")
         }
     }
 
+    // todo смаппить так же как и с loadOffers
     fun loadVacancies() {
         viewModelScope.launch {
-            _vacancies.value = repository.getVacancies() // Метод для получения вакансий
+            _vacancies.value = repository.getVacancies()
         }
     }
 
     fun loadFavoriteVacancies() {
         viewModelScope.launch {
-            // Получаем избранные вакансии из репозитория
-            val favoriteVacanciesEntities = repository.getFavoriteVacancies()
-            val favoriteVacancies = favoriteVacanciesEntities.map { it.toVacancy() } // Преобразуем VacancyEntity в Vacancy
-            _favoriteVacancies.postValue(favoriteVacancies) // Обновляем LiveData
+            val favoriteVacancies = repository.getFavoriteVacancies()
+            _favoriteVacancies.postValue(favoriteVacancies)
         }
     }
+
 
     fun saveOrUpdateVacancy(vacancy: Vacancy) {
         viewModelScope.launch {
-            val vacancyEntity = vacancy.toEntity()
-            repository.saveOrUpdateVacancy(vacancyEntity)
+            repository.saveOrUpdateVacancy(vacancy)
         }
     }
 
-    private fun Vacancy.toEntity(): VacancyEntity {
-        return VacancyEntity(
-            id = this.id,
-            lookingNumber = this.lookingNumber,
-            title = this.title,
-            address = this.address?.town ?: "",
-            company = this.company,
-            experience = this.experience?.previewText ?: "", // Обработка null
-            publishedDate = this.publishedDate,
-            isFavorite = this.isFavorite,
-            salary = this.salary.short ?: "",
-            schedules = this.schedules.joinToString(", "),
-            appliedNumber = this.appliedNumber,
-            description = this.description ?: "",
-            responsibilities = this.responsibilities ?: "",
-            questions = this.questions.joinToString(", ")
+    fun getVacancyDeclension(count: Int, resources: Resources): String {
+        return resources.getQuantityString(
+            R.plurals.vacancies_count,
+            count,
+            count,
+            when {
+                count % 10 == 1 && count % 100 != 11 -> "one"
+                count % 10 in 2..4 && (count % 100 < 10 || count % 100 > 20) -> "few"
+                else -> "many"
+            }
         )
     }
 
-    private fun VacancyEntity.toVacancy(): Vacancy {
-        return Vacancy(
-            id = this.id,
-            lookingNumber = this.lookingNumber,
-            title = this.title,
-            address = Address(town = this.address, "", ""),
-            company = this.company,
-            experience = Experience(previewText = this.experience, fullText = ""), // Убедитесь, что передаете корректные значения
-            publishedDate = this.publishedDate,
-            isFavorite = this.isFavorite,
-            salary = Salary(short = this.salary, full = ""),
-            schedules = this.schedules.split(", ").toList(),
-            appliedNumber = this.appliedNumber,
-            description = this.description ?: "",
-            responsibilities = this.responsibilities ?: "",
-            questions = this.questions.split(", ").toList()
-        )
-    }
+
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     app:circularflow_radiusInDP="100dp"
-    tools:context=".presentation.authorization.LoginScreen">
+    tools:context=".feature.auth.LoginScreen">
 
     <TextView
         android:id="@+id/tvEnterAcc"

@@ -1,4 +1,4 @@
-package com.example.jobsearchapp.data.room
+package com.example.jobsearchapp.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -10,7 +10,7 @@ import androidx.room.Update
 @Dao
 interface VacancyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(vacancyEntity: VacancyEntity)
+    suspend fun insert(vacancy: VacancyEntity)
 
     @Update
     suspend fun update(vacancyEntity: VacancyEntity)
