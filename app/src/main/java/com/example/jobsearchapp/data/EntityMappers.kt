@@ -6,7 +6,7 @@ import com.example.jobsearchapp.data.model.Experience
 import com.example.jobsearchapp.data.model.Salary
 import com.example.jobsearchapp.data.model.Vacancy
 
- fun Vacancy.toEntity(): VacancyEntity {
+fun Vacancy.toEntity(): VacancyEntity {
     return VacancyEntity(
         id = this.id,
         lookingNumber = this.lookingNumber,
@@ -25,7 +25,7 @@ import com.example.jobsearchapp.data.model.Vacancy
     )
 }
 
- fun VacancyEntity.toVacancy(): Vacancy {
+fun VacancyEntity.toVacancy(): Vacancy {
     return Vacancy(
         id = this.id,
         lookingNumber = this.lookingNumber,

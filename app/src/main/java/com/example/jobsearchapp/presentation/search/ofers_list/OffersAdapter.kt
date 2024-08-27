@@ -5,11 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jobsearchapp.data.model.Offer
 import com.example.jobsearchapp.databinding.ItemOfferBinding
-import com.example.jobsearchapp.presentation.search.mapToUI
 
-class OffersAdapter : ListAdapter<Offer, OffersAdapter.OfferViewHolder>(OfferDiffCallback()) {
+class OffersAdapter : ListAdapter<OfferUI, OffersAdapter.OfferViewHolder>(OfferDiffCallback()) {
 
     private var onOfferClick: ((String) -> Unit)? = null
 
@@ -37,16 +35,16 @@ class OffersAdapter : ListAdapter<Offer, OffersAdapter.OfferViewHolder>(OfferDif
 
     override fun onBindViewHolder(holder: OfferViewHolder, position: Int) {
         val offer = getItem(position)
-        holder.bind(offer.mapToUI(), onOfferClick)
+        holder.bind(offer, onOfferClick)
     }
 }
 
-class OfferDiffCallback : DiffUtil.ItemCallback<Offer>() {
-    override fun areItemsTheSame(oldItem: Offer, newItem: Offer): Boolean {
+class OfferDiffCallback : DiffUtil.ItemCallback<OfferUI>() {
+    override fun areItemsTheSame(oldItem: OfferUI, newItem: OfferUI): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Offer, newItem: Offer): Boolean {
+    override fun areContentsTheSame(oldItem: OfferUI, newItem: OfferUI): Boolean {
         return oldItem == newItem
     }
 }

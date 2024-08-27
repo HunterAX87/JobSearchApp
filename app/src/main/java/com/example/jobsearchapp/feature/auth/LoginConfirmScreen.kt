@@ -40,10 +40,8 @@ class LoginConfirmScreen : Fragment() {
                 resources.getColorStateList(R.color.dark_blue, null)
             }
         }
-
         setupPinCodeInput()
     }
-
 
     private fun setupPinCodeInput() {
         val editTexts = arrayOf(

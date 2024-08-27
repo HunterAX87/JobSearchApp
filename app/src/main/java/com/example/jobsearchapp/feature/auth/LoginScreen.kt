@@ -60,7 +60,6 @@ class LoginScreen : Fragment() {
                 edEmail.setTextColor(resources.getColor(R.color.grey5))
                 updateContinueButtonState(s.toString())
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
 

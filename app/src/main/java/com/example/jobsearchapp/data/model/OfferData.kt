@@ -19,7 +19,6 @@ data class Button(
     val text: String
 )
 
-
 data class Vacancy(
     val id: String,
     val lookingNumber: Int,
@@ -89,9 +88,9 @@ data class Vacancy(
 }
 
 data class Address(
-    val town: String? = "", // Значение по умолчанию
-    val street: String? = "", // Значение по умолчанию
-    val house: String? = "" // Значение по умолчанию
+    val town: String? = "",
+    val street: String? = "",
+    val house: String? = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -188,7 +187,7 @@ data class Experience(
 }
 
 data class Salary(
-    val short: String? = "", // Значение по умолчанию
+    val short: String? = "",
     val full: String? = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(

@@ -1,4 +1,4 @@
-package com.example.jobsearchapp.presentation.search
+package com.example.jobsearchapp.presentation.search.vacancies_list
 
 import android.content.res.Resources
 import android.os.Bundle
@@ -6,30 +6,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobsearchapp.R
-import com.example.jobsearchapp.data.model.Vacancy
 import com.example.jobsearchapp.databinding.ItemVacancyBinding
 
 class VacanciesAdapter(
-    private var vacancies: List<Vacancy>,
-    private val onClick: (Vacancy) -> Unit,
-    private val onRespondClick: (Vacancy) -> Unit
-) : RecyclerView.Adapter<VacanciesAdapter.VacancyViewHolder>() {
+    private val onClick: (VacancyUI) -> Unit,
+    private val onRespondClick: (VacancyUI) -> Unit
+) : ListAdapter<VacancyUI, VacanciesAdapter.VacancyViewHolder>(VacancyDiffCallback()) {
 
-    class VacancyViewHolder(private val binding: ItemVacancyBinding) :
+    class VacancyViewHolder(
+        private val binding: ItemVacancyBinding,
+        private val onClick: (VacancyUI) -> Unit,
+        private val onRespondClick: (VacancyUI) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            vacancy: Vacancy,
-            clickListener: (Vacancy) -> Unit,
-            respondClickListener: (Vacancy) -> Unit,
-            resources: Resources
+            vacancy: VacancyUI
         ) {
             binding.vacancyTitle.text = vacancy.title
             binding.vacancyCompany.text = vacancy.company
             binding.vacancyLocation.text = vacancy.address.town
             binding.vacancyExperience.text = vacancy.experience.previewText
-            binding.vacancyPublishedDate.text = formatPublishedDate(vacancy.publishedDate, resources)
+            binding.vacancyPublishedDate.text =
+                formatPublishedDate(vacancy.publishedDate, binding.root.context.resources)
 
             if (vacancy.salary.short.isNullOrEmpty()) {
                 binding.vacancySalary.visibility = View.GONE
@@ -39,8 +41,13 @@ class VacanciesAdapter(
             }
 
             if (vacancy.lookingNumber > 0) {
-                val tempLookingN= "Сейчас просматривает  ${getPersonDeclension(vacancy.lookingNumber,resources)}"
-                binding.vacancyLookingNumber.text =tempLookingN
+                val tempLookingN = "Сейчас просматривает  ${
+                    getPersonDeclension(
+                        vacancy.lookingNumber,
+                        binding.root.context.resources
+                    )
+                }"
+                binding.vacancyLookingNumber.text = tempLookingN
 
                 binding.vacancyLookingNumber.visibility = View.VISIBLE
             } else {
@@ -48,29 +55,28 @@ class VacanciesAdapter(
             }
 
             binding.vacancyFavoriteIcon.setImageResource(if (vacancy.isFavorite) R.drawable.favorites_true3x else R.drawable.favorites_false3x)
-
             binding.vacancyFavoriteIcon.setOnClickListener {
                 vacancy.isFavorite = !vacancy.isFavorite
                 binding.vacancyFavoriteIcon.setImageResource(if (vacancy.isFavorite) R.drawable.favorites_true3x else R.drawable.favorites_false3x) // Обновляем иконку
-                clickListener(vacancy)
+                onClick(vacancy)
             }
 
             itemView.setOnClickListener {
                 val bundle = Bundle().apply {
-                    putParcelable("vacancy", vacancy)
+                    putSerializable("vacancy", vacancy)
                 }
                 val navController = Navigation.findNavController(itemView)
                 navController.navigate(R.id.aboutFragment, bundle)
             }
 
             binding.bRespondd.setOnClickListener {
-                respondClickListener(vacancy)
+                onRespondClick(vacancy)
             }
         }
 
         private fun formatPublishedDate(date: String, resources: Resources): String {
             val parts = date.split("-")
-            return "Опубликовано ${parts[2]} ${getMonthDeclension(parts[1].toInt(),resources)}"
+            return "Опубликовано ${parts[2]} ${getMonthDeclension(parts[1].toInt(), resources)}"
         }
 
         private fun getMonthDeclension(month: Int, resources: Resources): String {
@@ -93,22 +99,22 @@ class VacanciesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         val binding = ItemVacancyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return VacancyViewHolder(binding)
+        return VacancyViewHolder(binding, onClick, onRespondClick)
     }
 
     override fun onBindViewHolder(holder: VacancyViewHolder, position: Int) {
         holder.bind(
-            vacancies[position],
-            onClick,
-            onRespondClick,
-            holder.itemView.resources
+            getItem(position)
         )
     }
+}
 
-    override fun getItemCount(): Int = vacancies.size
+class VacancyDiffCallback : DiffUtil.ItemCallback<VacancyUI>() {
+    override fun areItemsTheSame(oldItem: VacancyUI, newItem: VacancyUI): Boolean {
+        return oldItem.id == newItem.id
+    }
 
-    fun updateVacancies(newVacancies: List<Vacancy>) {
-        vacancies = newVacancies
-        notifyDataSetChanged()
+    override fun areContentsTheSame(oldItem: VacancyUI, newItem: VacancyUI): Boolean {
+        return oldItem == newItem
     }
 }

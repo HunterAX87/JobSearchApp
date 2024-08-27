@@ -1,7 +1,6 @@
 package com.example.jobsearchapp.presentation.about
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,13 +40,15 @@ class MyBottomSheetDialogFragment : BottomSheetDialogFragment() {
                 binding.tvVacancyName.text = title
                 binding.tvAddAccomp.visibility = View.GONE
                 binding.edAccomp.visibility = View.VISIBLE
-                binding.edAccomp.setText(question) // Устанавливаем текст вопроса в EditText
+                binding.edAccomp.setText(question)
             }
+
             title != null -> {
                 binding.tvVacancyName.text = title
                 binding.tvAddAccomp.visibility = View.VISIBLE
                 binding.edAccomp.visibility = View.GONE
             }
+
             else -> {
                 binding.tvAddAccomp.visibility = View.GONE
                 binding.edAccomp.visibility = View.GONE
@@ -72,6 +73,5 @@ class MyBottomSheetDialogFragment : BottomSheetDialogFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-
     }
 }

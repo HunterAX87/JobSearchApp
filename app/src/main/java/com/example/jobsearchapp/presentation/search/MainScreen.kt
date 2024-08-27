@@ -1,6 +1,5 @@
 package com.example.jobsearchapp.presentation.search
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -12,11 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobsearchapp.MyApplication
 import com.example.jobsearchapp.R
-import com.example.jobsearchapp.data.model.Vacancy
 import com.example.jobsearchapp.databinding.FragmentMainScreenBinding
 import com.example.jobsearchapp.presentation.about.MyBottomSheetDialogFragment
 import com.example.jobsearchapp.presentation.search.ofers_list.OffersAdapter
-import com.example.jobsearchapp.viewmodel.ViewModelFactory
+import com.example.jobsearchapp.presentation.search.vacancies_list.VacanciesAdapter
+import com.example.jobsearchapp.presentation.search.vacancies_list.VacancyUI
+import com.example.jobsearchapp.presentation.search.view_model.SearchMainViewModel
+import com.example.jobsearchapp.presentation.search.view_model.SearchViewModelFactory
 import javax.inject.Inject
 
 class MainScreen : Fragment() {
@@ -25,12 +26,11 @@ class MainScreen : Fragment() {
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    private val viewModel: MainViewModel by viewModels { viewModelFactory }
+    lateinit var searchViewModelFactory: SearchViewModelFactory
+    private val viewModel: SearchMainViewModel by viewModels { searchViewModelFactory }
     private lateinit var offersAdapter: OffersAdapter
     private lateinit var vacanciesAdapter: VacanciesAdapter
-    private var allVacancies: List<Vacancy> = emptyList()
+    private var allVacancies: List<VacancyUI> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,6 @@ class MainScreen : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -57,26 +56,43 @@ class MainScreen : Fragment() {
         imageBackListener()
 
         viewModel.loadOffers()
-        viewModel.loadVacancies()
+        viewModel.loadVacancies(resources)
+        observeOffers()
+        observeVacanciesCount()
     }
-
 
     private fun initRcViews() = with(binding) {
         offersAdapter = OffersAdapter()
-        vacanciesAdapter = VacanciesAdapter(emptyList(), { vacancy ->
-            viewModel.saveOrUpdateVacancy(vacancy)
-        }, { vacancy ->
-            respondToVacancy(vacancy)
-        })
+        vacanciesAdapter = VacanciesAdapter(
+            onClick = {
+                viewModel.saveOrUpdateVacancy(it)
+            },
+            onRespondClick = {
+                respondToVacancy(it)
+            }
+        )
 
-        rcViewRec.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        rcViewRec.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         rcViewVacancies.layoutManager = LinearLayoutManager(requireContext())
-
         rcViewRec.adapter = offersAdapter
         rcViewVacancies.adapter = vacanciesAdapter
     }
 
-    private fun respondToVacancy(vacancy: Vacancy) {
+    private fun observeOffers() {
+        viewModel.offers.observe(viewLifecycleOwner) {
+            offersAdapter.submitList(it)
+        }
+    }
+
+    private fun observeVacanciesCount() {
+        viewModel.vacanciesCount.observe(viewLifecycleOwner) { count ->
+            val tempVacanciesNum = "$count ${viewModel.getVacancyDeclension(count, resources)}"
+            binding.vacanciesNum.text = tempVacanciesNum
+        }
+    }
+
+    private fun respondToVacancy(vacancy: VacancyUI) {
         val bundle = Bundle().apply {
             putString("title", vacancy.title)
         }
@@ -96,7 +112,8 @@ class MainScreen : Fragment() {
         viewModel.vacancies.observe(viewLifecycleOwner) { vacancies ->
             allVacancies = vacancies
             val initialVacancies = vacancies.take(3)
-            vacanciesAdapter.updateVacancies(initialVacancies)
+            vacanciesAdapter.submitList(initialVacancies)
+
             val bMoreText = "${getString(R.string.more)} ${vacancies.size} ${
                 viewModel.getVacancyDeclension(
                     vacancies.size,
@@ -108,22 +125,14 @@ class MainScreen : Fragment() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private fun buttonMoreListener() = with(binding) {
         bMore.setOnClickListener {
-            vacanciesAdapter.updateVacancies(allVacancies)
+            vacanciesAdapter.submitList(allVacancies)
             bMore.visibility = View.GONE
             rcViewRec.visibility = View.GONE
             linearMore.visibility = View.VISIBLE
             tvVacanciesFY.visibility = View.GONE
             imBack.visibility = View.VISIBLE
-            vacanciesNum.text =
-                "${allVacancies.size} ${
-                    viewModel.getVacancyDeclension(
-                        allVacancies.size,
-                        resources
-                    )
-                }"
         }
     }
 
@@ -136,7 +145,6 @@ class MainScreen : Fragment() {
             initFirst3Vacancies()
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

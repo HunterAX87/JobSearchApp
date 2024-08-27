@@ -1,24 +1,20 @@
 package com.example.jobsearchapp.presentation.about
 
-import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.jobsearchapp.MyApplication
 import com.example.jobsearchapp.R
-import com.example.jobsearchapp.data.model.Vacancy
 import com.example.jobsearchapp.databinding.FragmentAboutBinding
-import com.example.jobsearchapp.presentation.search.MainViewModel
-import com.example.jobsearchapp.viewmodel.ViewModelFactory
+import com.example.jobsearchapp.presentation.search.view_model.SearchMainViewModel
+import com.example.jobsearchapp.presentation.search.vacancies_list.VacancyUI
+import com.example.jobsearchapp.presentation.search.view_model.SearchViewModelFactory
 import javax.inject.Inject
 
 class AboutFragment : Fragment() {
@@ -27,8 +23,8 @@ class AboutFragment : Fragment() {
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel: MainViewModel by viewModels { viewModelFactory }
+    lateinit var searchViewModelFactory: SearchViewModelFactory
+    private val viewModel: SearchMainViewModel by viewModels { searchViewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,18 +42,15 @@ class AboutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val vacancy: Vacancy? = arguments?.getParcelable("vacancy")
-
-        vacancy?.let { vac ->
+        val vacancy: VacancyUI = arguments?.getSerializable("vacancy") as VacancyUI
+        vacancy.let { vac ->
             setInformation(vac)
             setQuestionsContainer(vac)
         }
-
         respondToVacancy(vacancy)
     }
 
-
-    private fun setInformation(vac: Vacancy) = with(binding) {
+    private fun setInformation(vac: VacancyUI) = with(binding) {
         tvTitle.text = vac.title
         tvSalary.text = vac.salary.full ?: getString(R.string.salary_not_exist)
         tvExperience.text = vac.experience.previewText
@@ -82,14 +75,12 @@ class AboutFragment : Fragment() {
         val tempAdress = "${vac.address.town}, ${vac.address.street}, ${vac.address.house}"
         tvAdress.text = tempAdress
 
-
         tvDescription.text = vac.description ?: ""
-
         tvResponsibilities.text = vac.responsibilities?.replace("\n", "\n") ?: ""
     }
 
 
-    private fun setQuestionsContainer(vac: Vacancy) = with(binding) {
+    private fun setQuestionsContainer(vac: VacancyUI) = with(binding) {
         questionsContainer.removeAllViews()
 
         vac.questions.forEach { question ->
@@ -97,15 +88,11 @@ class AboutFragment : Fragment() {
                 .inflate(R.layout.item_question, questionsContainer, false) as CardView
             val questionTextView: TextView = questionView.findViewById(R.id.question_text)
             questionTextView.text = question
-
-            // Добавление обработчика клика
             questionView.setOnClickListener {
-                respondToQuestion(question, vac.title) // Вызываем метод для обработки клика
+                respondToQuestion(question, vac.title)
             }
-
             questionsContainer.addView(questionView)
         }
-
         updateFavoriteIcon(vac.isFavorite)
         imFavorite.setOnClickListener {
             vac.isFavorite = !vac.isFavorite
@@ -119,21 +106,18 @@ class AboutFragment : Fragment() {
             putString("question", question)
             putString("title", vacancy)
         }
-
         val bottomSheet = MyBottomSheetDialogFragment()
-        bottomSheet.arguments = bundle // Устанавливаем аргументы
-        bottomSheet.show(parentFragmentManager, bottomSheet.tag) // Используем parentFragmentManager
+        bottomSheet.arguments = bundle
+        bottomSheet.show(parentFragmentManager, bottomSheet.tag)
     }
 
-    private fun respondToVacancy(vacancy: Vacancy?) {
+    private fun respondToVacancy(vacancy: VacancyUI?) {
         binding.bRespondAbout.setOnClickListener {
-            Log.e("MyLog", "respondToVacancy from About Screen: $vacancy")
             val bundle = Bundle().apply {
-                putString("title", vacancy?.title) // Добавляем title в аргументы
+                putString("title", vacancy?.title)
             }
-
             val bottomSheet = MyBottomSheetDialogFragment()
-            bottomSheet.arguments = bundle // Устанавливаем аргументы
+            bottomSheet.arguments = bundle
             bottomSheet.show(
                 parentFragmentManager,
                 bottomSheet.tag
@@ -144,7 +128,6 @@ class AboutFragment : Fragment() {
     private fun updateFavoriteIcon(isFavorite: Boolean) {
         binding.imFavorite.setImageResource(if (isFavorite) R.drawable.favorites_true3x else R.drawable.favorites_false3x)
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

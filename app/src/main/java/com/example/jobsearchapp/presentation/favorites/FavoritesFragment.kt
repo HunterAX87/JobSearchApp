@@ -6,25 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobsearchapp.MyApplication
-import com.example.jobsearchapp.data.model.Vacancy
 import com.example.jobsearchapp.databinding.FragmentFavoritesBinding
 import com.example.jobsearchapp.presentation.about.MyBottomSheetDialogFragment
-import com.example.jobsearchapp.presentation.search.MainViewModel
-import com.example.jobsearchapp.presentation.search.VacanciesAdapter
-import com.example.jobsearchapp.viewmodel.ViewModelFactory
-import kotlinx.coroutines.launch
+import com.example.jobsearchapp.presentation.favorites.view_model.FavoriteViewModel
+import com.example.jobsearchapp.presentation.favorites.view_model.FavoriteViewModelFactory
+import com.example.jobsearchapp.presentation.search.vacancies_list.VacanciesAdapter
+import com.example.jobsearchapp.presentation.search.vacancies_list.VacancyUI
 import javax.inject.Inject
 
 class FavoritesFragment : Fragment() {
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
+
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel: MainViewModel by viewModels { viewModelFactory }
+    lateinit var viewModelFactory: FavoriteViewModelFactory
+    private val viewModel: FavoriteViewModel by viewModels { viewModelFactory }
     private lateinit var favoritesAdapter: VacanciesAdapter
 
     override fun onCreateView(
@@ -47,52 +46,42 @@ class FavoritesFragment : Fragment() {
         setViewModel()
     }
 
-    private fun setAdapter()=with(binding){
-
-        favoritesAdapter = VacanciesAdapter(emptyList(), { vacancy ->
-            vacancy.isFavorite = false
-            viewModel.saveOrUpdateVacancy(vacancy)
-            updateFavorites()
-        }, { vacancy ->
-            respondToVacancy(vacancy)
-        })
-
+    private fun setAdapter() = with(binding) {
+        favoritesAdapter = VacanciesAdapter(
+            onClick = { vacancy ->
+                vacancy.isFavorite = false
+                viewModel.saveOrUpdateVacancy(vacancy)
+                updateFavorites()
+            },
+            onRespondClick = { vacancy ->
+                respondToVacancy(vacancy)
+            }
+        )
         rcFavorites.layoutManager = LinearLayoutManager(requireContext())
         rcFavorites.adapter = favoritesAdapter
     }
 
-    private fun setViewModel(){
-
+    private fun setViewModel() {
         viewModel.favoriteVacancies.observe(viewLifecycleOwner) { favoriteVacancies ->
-            favoritesAdapter.updateVacancies(favoriteVacancies)
+            favoritesAdapter.submitList(favoriteVacancies)
             val count = favoriteVacancies.size
-            val temoDeclension="$count ${viewModel.getVacancyDeclension(count, resources)}"
-            binding.countFavorites.text = temoDeclension
+            val tempDeclension = "$count ${viewModel.getVacancyDeclension(count, resources)}"
+            binding.countFavorites.text = tempDeclension
         }
-
         viewModel.loadFavoriteVacancies()
     }
 
-    private fun respondToVacancy(vacancy: Vacancy) {
+    private fun respondToVacancy(vacancy: VacancyUI) {
         val bundle = Bundle().apply {
             putString("title", vacancy.title)
         }
-
         val bottomSheet = MyBottomSheetDialogFragment()
         bottomSheet.arguments = bundle
         bottomSheet.show(parentFragmentManager, bottomSheet.tag)
     }
 
     private fun updateFavorites() {
-        lifecycleScope.launch {
-            val favoriteVacancies = viewModel.favoriteVacancies.value
-                ?: emptyList()
-            favoritesAdapter.updateVacancies(favoriteVacancies)
-
-            val count = favoriteVacancies.size
-            val tempVacancyDec="$count ${viewModel.getVacancyDeclension(count, resources)}"
-            binding.countFavorites.text = tempVacancyDec
-        }
+        viewModel.loadFavoriteVacancies()
     }
 
     override fun onDestroyView() {

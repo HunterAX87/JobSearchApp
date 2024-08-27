@@ -42,7 +42,6 @@ class AuthViewModel : ViewModel() {
                     }
                     checkConfirmButtonState(editTexts)
                 }
-
                 override fun afterTextChanged(s: Editable?) {}
             })
 
@@ -63,6 +62,4 @@ class AuthViewModel : ViewModel() {
         val allFilled = editTexts.all { it.text.length == 1 }
         _isConfirmButtonEnabled.value = allFilled
     }
-
-
 }

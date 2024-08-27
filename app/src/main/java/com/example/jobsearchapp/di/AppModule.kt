@@ -6,7 +6,7 @@ import androidx.room.Room
 import com.example.jobsearchapp.data.local.AppDatabase
 import com.example.jobsearchapp.data.local.VacancyDao
 import com.example.jobsearchapp.data.repository.DataRepository
-import com.example.jobsearchapp.viewmodel.ViewModelFactory
+import com.example.jobsearchapp.presentation.search.view_model.SearchViewModelFactory
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -43,7 +43,7 @@ class AppModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun provideViewModelFactory(repository: DataRepository): ViewModelFactory {
-        return ViewModelFactory(repository)
+    fun provideViewModelFactory(repository: DataRepository): SearchViewModelFactory {
+        return SearchViewModelFactory(repository)
     }
 }
